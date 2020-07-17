@@ -3,15 +3,42 @@
 
 export default (mongoose) => {
   let schema = mongoose.Schema({
-    description: String,
-    value: Number,
-    category: String,
-    year: Number,
-    month: Number,
-    day: Number,
-    yearMonth: String,
-    yearMonthDay: String,
-    type: String,
+    description: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: Number,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
+    month: {
+      type: Number,
+      required: true,
+    },
+    day: {
+      type: Number,
+      required: true,
+    },
+    yearMonth: {
+      type: String,
+      required: true,
+    },
+    yearMonthDay: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
   });
 
   return mongoose.model('transaction', schema);

@@ -1,5 +1,6 @@
 // const mongoose = require('mongoose');
 import mongoose from 'mongoose';
+import { logger } from '../config/logger.js';
 const ObjectId = mongoose.Types.ObjectId;
 
 // Aqui havia um erro difícil de pegar. Importei como "transactionModel",
@@ -14,11 +15,82 @@ const tm = TransactionModel(mongoose);
 const findAll = async (req, res) => {
   const { period } = req.query;
   try {
-    const result = await tm.find({ yearMonth: period });
-    res.status(200).send({ data: result });
+    const data = await tm.find({ yearMonth: period });
+
+    if (!data) {
+      res.status(404).send({ message: 'Nenhum lançamento encontrado' });
+    }
+
+    res.status(200).send({ data: data });
+    logger.info(`GET /api/transaction?period=${period}`);
   } catch (err) {
     res.status(500).send({ data: 'Erro ao buscar pelo período' });
+    logger.error(
+      `GET /api/transaction?period=${period} - ${JSON.stringify(error.message)}`
+    );
   }
 };
 
-export default { findAll };
+const findOne = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await tm.findById({ _id: id });
+
+    if (!data) {
+      res.status(404).send({ message: `Lançamento ${id} não encontrado` });
+    }
+
+    res.status(200).send({ data: data });
+    logger.info(`GET /api/transaction/id=${id}`);
+  } catch (err) {
+    res.status(500).send({ data: `Erro ao buscar pelo lançamento ${id}` });
+    logger.error(
+      `GET /api/transaction/id=${id} - ${JSON.stringify(error.message)}`
+    );
+  }
+};
+
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await tm.findByIdAndDelete({ _id: id });
+
+    if (!data) {
+      res
+        .status(404)
+        .send({ message: `Lançamento ${id} não encontrado para exclusão` });
+    }
+
+    res.status(200).send({ data: data });
+    logger.info(`DELETE /api/transaction/id=${id}`);
+  } catch (err) {
+    res.status(500).send({ data: `Erro ao excluir lançamento ${id}` });
+    logger.error(
+      `DELETE /api/transaction/id=${id} - ${JSON.stringify(error.message)}`
+    );
+  }
+};
+
+const getYearMonths = async (req, res) => {
+  try {
+    let data;
+    await tm.distinct('yearMonth', function (error, ids) {
+      // if (error) throw new Error('Erro => ' + error);
+      data = ids;
+    });
+
+    if (!data) {
+      res.status(404).send({ message: 'Nenhum período encontrado' });
+    }
+
+    res.status(200).send({ data: data });
+    // logger.info(`GET /api/transaction?period=${period}`);
+  } catch (err) {
+    res.status(500).send({ data: 'Erro ao buscar períodos' });
+    // logger.error(
+    //   `GET /api/transaction?period=${period} - ${JSON.stringify(error.message)}`
+    // );
+  }
+};
+
+export default { findAll, findOne, deleteOne, getYearMonths };

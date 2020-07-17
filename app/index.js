@@ -23,6 +23,11 @@ let connectedToMongoDB;
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+);
 
 /**
  * Vinculando o React ao app
