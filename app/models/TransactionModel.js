@@ -1,6 +1,3 @@
-// const mongoose = require('mongoose');
-// import mongoose from 'mongoose';
-
 export default (mongoose) => {
   let schema = mongoose.Schema({
     description: {
@@ -43,6 +40,3 @@ export default (mongoose) => {
 
   return mongoose.model('transaction', schema);
 };
-// const TransactionModel = mongoose.model('transaction', schema);
-
-// export default { TransactionModel };

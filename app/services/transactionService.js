@@ -1,4 +1,3 @@
-// const mongoose = require('mongoose');
 import mongoose from 'mongoose';
 import { logger } from '../config/logger.js';
 const ObjectId = mongoose.Types.ObjectId;

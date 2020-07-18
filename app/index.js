@@ -1,14 +1,8 @@
-// const express = require('express');
 import express from 'express';
-// const cors = require('cors');
 import cors from 'cors';
-// const mongoose = require('mongoose');
 import mongoose from 'mongoose';
-// const routes = require('./routes/routes');
 import { routes } from './routes/routes.js';
-// const path = require('path');
 import path from 'path';
-// const dotenv = require('dotenv');
 import 'dotenv/config.js';
 
 const __dirname = path.resolve();
