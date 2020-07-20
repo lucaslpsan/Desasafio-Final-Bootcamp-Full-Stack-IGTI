@@ -3,10 +3,11 @@ import { getAllTransactions, getAllPeriods } from './services/apiServices';
 import Spinner from './components/Spinner';
 import TransactionsControl from './components/TransactionsControl';
 import SelectDate from './components/SelectDate';
+import ResumeTransactions from './components/ResumeTransactions';
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
-  const [selectDate, setSelectDate] = useState('2020-06');
+  const [selectDate, setSelectDate] = useState('Escolha um período');
   const [dates, setDates] = useState([]);
 
   useEffect(() => {
@@ -39,18 +40,21 @@ export default function App() {
     <div className="container center">
       <h1>Desafio Final do Bootcamp Full Stack</h1>
       <h2>Controle Financeiro Pessoal</h2>
-      <SelectDate
-        dates={dates}
-        selectDate={selectDate}
-        onChange={handleSelectDateChange}
-      />
-      {!transactions && <Spinner />}
-      {transactions && (
-        <TransactionsControl
-          transactions={transactions}
-          onDelete={handleOnDelete}
-          onPersist={handleOnPersist}
-        />
+      {!dates.length && <Spinner />}
+      {dates.length && (
+        <div>
+          <SelectDate
+            dates={dates}
+            selectDate={selectDate}
+            onChange={handleSelectDateChange}
+          />
+          <ResumeTransactions transactions={transactions} />
+          <TransactionsControl
+            transactions={transactions}
+            onDelete={handleOnDelete}
+            onPersist={handleOnPersist}
+          />
+        </div>
       )}
     </div>
   );

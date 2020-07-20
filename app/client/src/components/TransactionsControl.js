@@ -5,9 +5,5 @@ export default function TransactionsControl({
   onDelete,
   onPersist,
 }) {
-  return (
-    <div>
-      <p>Funfa</p>
-    </div>
-  );
+  return <div>{transactions.length}</div>;
 }
