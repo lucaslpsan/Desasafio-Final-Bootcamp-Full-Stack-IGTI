@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0 15px 0;
+  align-items: center;
+}
+
+.day {
+  margin: 0 25px 0 20px;
+}
+
+.categoryAndDescription {
+  width: 60%;
+  text-align: start;
+}
+
+.value {
+  width: 15%;
+}
+
+.actions {
+  width: 8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

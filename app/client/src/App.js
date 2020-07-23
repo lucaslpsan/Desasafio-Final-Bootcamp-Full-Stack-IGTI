@@ -13,6 +13,9 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const dataTrasactions = await getAllTransactions(selectDate);
+
+      dataTrasactions.data.sort((a, b) => a.day - b.day);
+
       setTransactions(dataTrasactions.data);
     })();
   }, [selectDate]);
@@ -24,8 +27,15 @@ export default function App() {
     })();
   }, []);
 
-  const handleOnDelete = () => {
-    console.log('handleOnDelete');
+  const handleOnDelete = (id) => {
+    console.log('handleOnDelete: ' + id);
+    // let newTransactions = Object.assign([], transactions);
+
+    const newTransactions = transactions.filter(
+      (transaction) => transaction._id !== id
+    );
+
+    setTransactions(newTransactions);
   };
   const handleOnPersist = () => {
     console.log('handleOnPersist');

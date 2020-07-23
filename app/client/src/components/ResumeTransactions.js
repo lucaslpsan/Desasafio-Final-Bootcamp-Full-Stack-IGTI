@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './ResumeTransactions.module.css';
+import MoneyFormat from '../helpers/MoneyFormat';
 
 export default function ResumeTransactions({ transactions }) {
   const sumPositive = transactions.reduce((acc, curr) => {
@@ -14,12 +15,14 @@ export default function ResumeTransactions({ transactions }) {
     <div className={css.container}>
       <div>Lançamentos: {transactions.length}</div>
       <div>
-        Receitas: <span className={css.positive}>{sumPositive}</span>
+        Receitas:{' '}
+        <span className={css.positive}>{MoneyFormat(sumPositive)}</span>
       </div>
       <div>
-        Despesas: <span className={css.negative}>{sumNegative}</span>
+        Despesas:{' '}
+        <span className={css.negative}>{MoneyFormat(sumNegative)}</span>
       </div>
-      <div>Saldos: {sumPositive - sumNegative}</div>
+      <div>Saldos: {MoneyFormat(sumPositive - sumNegative)}</div>
     </div>
   );
 }
