@@ -4,11 +4,14 @@ import Spinner from './components/Spinner';
 import TransactionsControl from './components/TransactionsControl';
 import SelectDate from './components/SelectDate';
 import ResumeTransactions from './components/ResumeTransactions';
+import ModalTransactions from './components/ModalTransactions';
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
   const [selectDate, setSelectDate] = useState('Escolha um período');
   const [dates, setDates] = useState([]);
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [currentTrasaction, setCurrenTransaction] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -37,11 +40,18 @@ export default function App() {
 
     setTransactions(newTransactions);
   };
-  const handleOnPersist = () => {
-    console.log('handleOnPersist');
+  const handleOnPersist = (transactionToPersist) => {
+    console.log('handleOnPersist :' + transactionToPersist._id);
+    setCurrenTransaction(transactionToPersist);
+    setIsModelOpen(true);
   };
   const handleSelectDateChange = (chosenDate) => {
     setSelectDate(chosenDate);
+  };
+
+  const handleSaveTransaction = () => {};
+  const handleClose = () => {
+    setIsModelOpen(false);
   };
 
   console.log(transactions);
@@ -65,6 +75,13 @@ export default function App() {
             onPersist={handleOnPersist}
           />
         </div>
+      )}
+      {isModelOpen && (
+        <ModalTransactions
+          onSave={handleSaveTransaction}
+          onClose={handleClose}
+          transaction={currentTrasaction}
+        />
       )}
     </div>
   );

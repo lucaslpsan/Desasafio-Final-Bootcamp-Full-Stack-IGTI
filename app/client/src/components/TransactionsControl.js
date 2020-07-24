@@ -8,9 +8,13 @@ export default function TransactionsControl({
   onDelete,
   onPersist,
 }) {
-  const onActionClickHandle = (id, action) => {
-    // console.log('id ' + id + ' action: ' + action);
-    if (action === 'delete') onDelete(id);
+  const onActionClickHandle = (transaction, action) => {
+    // console.log('transaction ' + transaction + ' action: ' + action);
+    if (action === 'delete') {
+      onDelete(transaction._id);
+    } else {
+      onPersist(transaction);
+    }
   };
   return (
     <div>
@@ -25,12 +29,12 @@ export default function TransactionsControl({
             <div className={css.value}>{MoneyFormat(transaction.value)}</div>
             <div className={css.actions}>
               <ActionsTransactions
-                id={transaction._id}
+                chosenTransaction={transaction}
                 type="edit"
                 onActionClick={onActionClickHandle}
               />
               <ActionsTransactions
-                id={transaction._id}
+                chosenTransaction={transaction}
                 type="delete"
                 onActionClick={onActionClickHandle}
               />

@@ -1,8 +1,12 @@
 import React from 'react';
 
-export default function ActionsTransactions({ id, type, onActionClick }) {
+export default function ActionsTransactions({
+  chosenTransaction,
+  type,
+  onActionClick,
+}) {
   const onActionClickHandle = () => {
-    onActionClick(id, type);
+    onActionClick(chosenTransaction, type);
   };
   return (
     <span
