@@ -1,4 +1,4 @@
-export default (value) => {
+export const dateFormat = (value) => {
   const retornos = value.split('-');
   switch (retornos[1]) {
     case '01':
@@ -25,5 +25,23 @@ export default (value) => {
       return 'Nov/' + retornos[0];
     default:
       return 'Dez/' + retornos[0];
+  }
+};
+
+export const lastDayOfMonth = (date) => {
+  const arrayDate = date.split('-');
+  switch (arrayDate[1]) {
+    case '01':
+    case '03':
+    case '05':
+    case '07':
+    case '08':
+    case '10':
+    case '12':
+      return date + '-31';
+    case '02':
+      return date + '-28';
+    default:
+      return date + '-30';
   }
 };

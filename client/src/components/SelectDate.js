@@ -1,5 +1,5 @@
 import React from 'react';
-import dateFormat from '../helpers/DateFormat';
+import { dateFormat } from '../helpers/DateFormat';
 
 export default function SelectDate({ dates, selectDate, onChange }) {
   const handleChange = (event) => {

@@ -19,7 +19,8 @@ app.use(cors());
 app.use(express.json());
 app.use(
   cors({
-    origin: 'https://bootcamp-desafio-final.herokuapp.com',
+    // origin: 'https://bootcamp-desafio-final.herokuapp.com',
+    origin: 'http://localhost:3000',
   })
 );
 

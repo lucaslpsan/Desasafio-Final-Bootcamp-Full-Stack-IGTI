@@ -5,6 +5,7 @@ import TransactionsControl from './components/TransactionsControl';
 import SelectDate from './components/SelectDate';
 import ResumeTransactions from './components/ResumeTransactions';
 import ModalTransactions from './components/ModalTransactions';
+import { lastDayOfMonth } from './helpers/DateFormat';
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
@@ -25,8 +26,8 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const dataPeriods = await getAllPeriods();
-      setDates(dataPeriods.data);
+      const datePeriods = await getAllPeriods();
+      setDates(datePeriods.data);
     })();
   }, []);
 
@@ -49,7 +50,10 @@ export default function App() {
     setSelectDate(chosenDate);
   };
 
-  const handleSaveTransaction = () => {};
+  const handleSaveTransaction = (formData) => {
+    console.log(formData);
+    setIsModelOpen(false);
+  };
   const handleClose = () => {
     setIsModelOpen(false);
   };
@@ -81,6 +85,10 @@ export default function App() {
           onSave={handleSaveTransaction}
           onClose={handleClose}
           transaction={currentTrasaction}
+          datesLimits={{
+            start: dates[0] + '-01',
+            end: lastDayOfMonth(dates[dates.length - 1]),
+          }}
         />
       )}
     </div>
