@@ -40,6 +40,13 @@ export const lastDayOfMonth = (date) => {
     case '12':
       return date + '-31';
     case '02':
+      //Verifica se o ano é bissexto
+      if (
+        arrayDate[1] % 4 === 0 &&
+        arrayDate[1] % 400 === 0 &&
+        arrayDate[1] % 100 === 0
+      )
+        return date + '-29';
       return date + '-28';
     default:
       return date + '-30';

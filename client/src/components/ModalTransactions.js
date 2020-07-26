@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import css from './ModalTransactions.module.css';
+import { formatTransaction } from '../helpers/Transaction';
 
 Modal.setAppElement('#root');
 
@@ -35,12 +36,18 @@ export default function ModalTransactions({
   const handleSubmitSave = (event) => {
     event.preventDefault();
 
-    const formData = {
-      id: transaction._id,
-      value: value,
-    };
+    const transactionToSave = formatTransaction(
+      transaction._id,
+      category,
+      description,
+      type,
+      value,
+      date
+    );
 
-    onSave(formData);
+    // console.log(toSaveTransaction);
+
+    onSave(transactionToSave);
   };
 
   const handleChangeType = (event) => {
@@ -86,7 +93,6 @@ export default function ModalTransactions({
         <p>
           <label>
             <input
-              // id="inputRadioDespesa"
               radioGroup="groupType"
               type="radio"
               name="group"
@@ -98,7 +104,6 @@ export default function ModalTransactions({
           </label>
           <label>
             <input
-              // id="inputRadioReceita"
               radioGroup="groupType"
               type="radio"
               name="group"
@@ -112,6 +117,7 @@ export default function ModalTransactions({
         <div className="input-field">
           <input
             id="inputCategory"
+            required
             type="text"
             value={category || ''}
             onChange={handleCategoryChange}
@@ -123,6 +129,7 @@ export default function ModalTransactions({
         <div className="input-field">
           <input
             id="inputDescription"
+            required
             type="text"
             value={description || ''}
             onChange={handleDescriptionChange}
@@ -134,6 +141,7 @@ export default function ModalTransactions({
         <div className="input-field">
           <input
             id="inputValue"
+            required
             type="number"
             value={value || ''}
             onChange={handleValueChange}
@@ -145,8 +153,9 @@ export default function ModalTransactions({
         <div>
           <input
             type="date"
+            required
             className="datepicker"
-            value={date}
+            value={date || ''}
             onChange={handleDateChange}
             min={datesLimits.start}
             max={datesLimits.end}

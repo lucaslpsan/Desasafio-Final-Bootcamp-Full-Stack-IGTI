@@ -70,6 +70,76 @@ const deleteOne = async (req, res) => {
   }
 };
 
+const updateOne = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: 'Dados para atualizacao vazio',
+    });
+  }
+
+  const { id } = req.params;
+
+  try {
+    const data = await tm.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+
+    if (data.length < 1) {
+      res
+        .status(404)
+        .send({ message: 'Nenhum lançamento encontrado para atualizar' });
+    } else {
+      res.send(data);
+    }
+    logger.info(`PUT /api/transaction/id=${id}`);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Erro ao atualizar o lançamento id: ' + id });
+    logger.error(
+      `PUT /api/transaction/id=${id} - ${JSON.stringify(error.message)}`
+    );
+  }
+};
+
+const create = async (req, res) => {
+  const {
+    category,
+    day,
+    description,
+    month,
+    type,
+    value,
+    year,
+    yearMonth,
+    yearMonthDay,
+  } = req.body;
+
+  const transaction = new tm({
+    category,
+    day,
+    description,
+    month,
+    type,
+    value,
+    year,
+    yearMonth,
+    yearMonthDay,
+  });
+
+  try {
+    await transaction.save(transaction);
+
+    res.send({ message: 'Lançamento inserido com sucesso' });
+    logger.info(`POST /api/transaction/`);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: error.message || 'Algum erro ocorreu ao salvar' });
+    logger.error(`POST /api/transaction/- ${JSON.stringify(error.message)}`);
+  }
+};
+
 const getYearMonths = async (req, res) => {
   try {
     let data;
@@ -92,4 +162,11 @@ const getYearMonths = async (req, res) => {
   }
 };
 
-export default { findAll, findOne, deleteOne, getYearMonths };
+export default {
+  findAll,
+  findOne,
+  deleteOne,
+  getYearMonths,
+  updateOne,
+  create,
+};

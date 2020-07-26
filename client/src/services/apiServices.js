@@ -1,17 +1,38 @@
 import axios from 'axios';
+import 'dotenv/config.js';
 
-const getAllTransactions = async (date) => {
-  const data = await axios.get(
-    `http://localhost:3001/api/transaction?period=${date}`
-  );
+//Conexão com a API
+const LINK_API = process.env.REACT_APP_LINK_API;
 
-  return data.data;
-};
-
-const getAllPeriods = async () => {
-  const data = await axios.get(`http://localhost:3001/api/transaction/periods`);
+export const getAllTransactions = async (date) => {
+  const data = await axios.get(`${LINK_API}?period=${date}`);
 
   return data.data;
 };
 
-export { getAllTransactions, getAllPeriods };
+export const getAllPeriods = async () => {
+  console.log(LINK_API);
+  const data = await axios.get(`${LINK_API}/periods`);
+
+  return data.data;
+};
+
+export const updateTransaction = async (transaction) => {
+  const response = await axios.put(`${LINK_API}/${transaction._id}`, {
+    ...transaction,
+  });
+
+  return response;
+};
+
+export const createTransaction = async (transaction) => {
+  const response = await axios.post(LINK_API, {
+    ...transaction,
+  });
+
+  return response;
+};
+
+export const deleteTransaction = async (id) => {
+  const response = await axios.delete(`${LINK_API}/${id}`);
+};
