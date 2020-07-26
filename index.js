@@ -14,13 +14,18 @@ let connectedToMongoDB;
  */
 // dotenv.config();
 
+/**
+ * Conexão ao Banco de Dados e do react-app
+ */
+const { DB_CONNECTION, LINK_APP } = process.env;
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(
   cors({
     // origin: 'https://bootcamp-desafio-final.herokuapp.com',
-    origin: 'http://localhost:3000',
+    origin: LINK_APP,
   })
 );
 
@@ -43,11 +48,6 @@ app.get('/api/', (_, response) => {
  * Rotas principais do app
  */
 app.use('/api/transaction', routes);
-
-/**
- * Conexão ao Banco de Dados
- */
-const { DB_CONNECTION } = process.env;
 
 console.log('Iniciando conexão ao MongoDB...');
 mongoose.connect(
