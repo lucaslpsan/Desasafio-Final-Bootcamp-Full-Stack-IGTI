@@ -89,7 +89,7 @@ const updateOne = async (req, res) => {
         .status(404)
         .send({ message: 'Nenhum lançamento encontrado para atualizar' });
     } else {
-      res.send(data);
+      res.status(200).send(data);
     }
     logger.info(`PUT /api/transaction/id=${id}`);
   } catch (error) {
@@ -130,7 +130,7 @@ const create = async (req, res) => {
   try {
     await transaction.save(transaction);
 
-    res.send({ message: 'Lançamento inserido com sucesso' });
+    res.status(200).send({ message: 'Lançamento inserido com sucesso' });
     logger.info(`POST /api/transaction/`);
   } catch (error) {
     res

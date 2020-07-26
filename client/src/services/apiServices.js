@@ -35,4 +35,6 @@ export const createTransaction = async (transaction) => {
 
 export const deleteTransaction = async (id) => {
   const response = await axios.delete(`${LINK_API}/${id}`);
+
+  return response;
 };

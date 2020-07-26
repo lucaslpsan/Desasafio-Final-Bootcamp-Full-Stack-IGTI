@@ -21,10 +21,17 @@ export default function TransactionsRender({
       <div>
         {transactions.map((transaction) => {
           return (
-            <div key={transaction._id} className={css.container}>
+            <div
+              key={transaction._id}
+              className={
+                css.container +
+                ' ' +
+                (transaction.type === '+' ? css.receita : css.despesa)
+              }
+            >
               <div className={css.day}>{transaction.day}</div>
               <div className={css.categoryAndDescription}>
-                <div>{transaction.category}</div>
+                <div className={css.category}>{transaction.category}</div>
                 <div>{transaction.description}</div>
               </div>
               <div className={css.value}>{MoneyFormat(transaction.value)}</div>

@@ -10,6 +10,7 @@ export default function SelectDate({ dates, selectDate, onChange }) {
     <div>
       <select
         className={'browser-default custom-select'}
+        style={style.boxSelect}
         value={selectDate}
         onChange={handleChange}
       >
@@ -25,3 +26,9 @@ export default function SelectDate({ dates, selectDate, onChange }) {
     </div>
   );
 }
+
+const style = {
+  boxSelect: {
+    borderRadius: '5px',
+  },
+};

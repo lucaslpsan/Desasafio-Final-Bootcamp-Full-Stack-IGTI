@@ -13,6 +13,7 @@ import ResumeTransactions from './components/ResumeTransactions';
 import ModalTransactions from './components/ModalTransactions';
 import { lastDayOfMonth } from './helpers/DateFormat';
 import SearchTransactions from './components/SearchTransactions';
+import ButtonSelectDate from './components/ButtonSelectDate';
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
@@ -128,13 +129,27 @@ export default function App() {
       {!dates.length && <Spinner />}
       {dates.length && (
         <div>
-          <SelectDate
-            dates={dates}
-            selectDate={selectDate}
-            onChange={handleSelectDateChange}
-          />
+          <div style={{ ...style.flexRow, ...style.selectDateDiv }}>
+            <ButtonSelectDate
+              direction={'previous'}
+              dates={dates}
+              selectDate={selectDate}
+              onClick={handleSelectDateChange}
+            />
+            <SelectDate
+              dates={dates}
+              selectDate={selectDate}
+              onChange={handleSelectDateChange}
+            />
+            <ButtonSelectDate
+              direction={'next'}
+              dates={dates}
+              selectDate={selectDate}
+              onClick={handleSelectDateChange}
+            />
+          </div>
           <ResumeTransactions transactions={transactions} />
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={style.flexRow}>
             <button
               className="waves-lights btn"
               onClick={handleClickNewTransaction}
@@ -167,3 +182,12 @@ export default function App() {
     </div>
   );
 }
+
+const style = {
+  flexRow: { display: 'flex', flexDirection: 'row' },
+  selectDateDiv: {
+    justifyContent: 'center',
+    width: '100%',
+    alignItems: 'center',
+  },
+};
